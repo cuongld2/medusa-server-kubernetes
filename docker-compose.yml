@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  backend:
+    image: medusa-backend:latest
+    container_name: medusa-backend
+    restart: always
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      DATABASE_URL: postgres://donald:le@postgres-medusa:5432/medusa-store
+      REDIS_URL: redis://redis-medusa:6379
+      JWT_SECRET: something
+      COOKIE_SECRET: something
+      DATABASE_TYPE: postgres
+    ports:
+      - "9000:9000"
+    networks:
+      - medusa
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres-medusa
+    environment:
+      POSTGRES_USER: donald
+      POSTGRES_PASSWORD: le
+      POSTGRES_DB: medusa-store
+    ports:
+      - "5432:5432"
+    networks:
+      - medusa
+
+  redis:
+    image: redis:latest
+    container_name: redis-medusa
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - medusa
+
+networks:
+  medusa:
+    name: medusa
