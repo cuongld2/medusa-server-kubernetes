@@ -22,13 +22,15 @@ spec:
                 name: dockerhub-secret
           # Temporarily use raw values for setting database credentials as environment variables, should use Secret management tool like Vault to store these secrets
           env:
-            - name: POSTGRES_DB
-              value: medusa-store
-            - name: POSTGRES_USER
-              value: donald
-            - name: POSTGRES_PASSWORD
-              value: le
-            - name: POSTGRES_HOST
-              value: postgresql:5432
+            - name: REDIS_URL
+              value: redis://redis:6379
+            - name: DATABASE_URL
+              value: postgres://donald:le@postgres-medusa:5432/medusa-store
+            - name: JWT_SECRET
+              value: something
+            - name: COOKIE_SECRET
+              value: something
+            - name: DATABASE_TYPE
+              value: postgres
           ports:
             - containerPort: 8081
