@@ -15,8 +15,6 @@ services:
       DATABASE_TYPE: postgres
     ports:
       - "9000:9000"
-    networks:
-      - medusa
 
   postgres:
     image: postgres:latest
@@ -27,8 +25,6 @@ services:
       POSTGRES_DB: medusa-store
     ports:
       - "5432:5432"
-    networks:
-      - medusa
 
   redis:
     image: redis:latest
@@ -36,9 +32,14 @@ services:
     restart: always
     ports:
       - "6379:6379"
-    networks:
-      - medusa
-
-networks:
-  medusa:
-    name: medusa
+  
+  storefront:
+    image: medusa-storefront:latest
+    container_name: medusa-storefront
+    restart: always
+    environment:
+      NEXT_PUBLIC_MEDUSA_BACKEND_URL: http://medusa-backend:9000
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"

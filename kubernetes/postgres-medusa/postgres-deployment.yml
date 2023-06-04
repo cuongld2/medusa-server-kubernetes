@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql
+  labels:
+    app: postgresql
+    tier: database
+spec:
+  selector:
+    matchLabels:
+      app: postgresql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: postgresql
+        tier: database
+    spec:
+      containers:
+        - name: postgresql
+          image: postgres:latest
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: POSTGRES_DB
+              value: medusa-store
+            - name: POSTGRES_USER
+              value: donald
+            - name: POSTGRES_PASSWORD
+              value: le
+          ports:
+            - containerPort: 5432
+              name: postgresql
+          volumeMounts:
+            - name: postgresql-claim0
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgresql-claim0
+          persistentVolumeClaim:
+            claimName: postgresql-claim0
+
+        - name: postgresql-initdb
+          configMap:
+            name: postgresql-initdb-config
