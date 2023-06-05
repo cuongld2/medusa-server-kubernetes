@@ -25,11 +25,11 @@ RUN mkdir dist
 
 COPY package*.json ./
 
-COPY develop.sh .
+COPY develop.sh ./
 
 COPY medusa-config.js .
 
-COPY data/seed.json .
+COPY data/seed.json ./data/seed.json
 
 RUN apt-get update
 

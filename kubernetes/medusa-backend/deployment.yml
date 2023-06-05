@@ -4,7 +4,6 @@ kind: Deployment
 metadata:
   name: medusa-backend
 spec:
-  replicas: 2
   selector:
     matchLabels:
       name: medusa-backend
@@ -15,7 +14,7 @@ spec:
     spec:
       containers:
         - name: application
-          image: username/medusa-backend
+          image: cuongld2/medusa-backend
           imagePullPolicy: Always
           envFrom:
             - secretRef:
@@ -25,7 +24,7 @@ spec:
             - name: REDIS_URL
               value: redis://redis:6379
             - name: DATABASE_URL
-              value: postgres://donald:le@postgres-medusa:5432/medusa-store
+              value: postgres://donald:le@postgresql:5432/medusa-store
             - name: JWT_SECRET
               value: something
             - name: COOKIE_SECRET
@@ -33,4 +32,4 @@ spec:
             - name: DATABASE_TYPE
               value: postgres
           ports:
-            - containerPort: 8081
+            - containerPort: 9000

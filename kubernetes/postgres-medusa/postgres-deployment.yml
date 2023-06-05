@@ -32,13 +32,9 @@ spec:
             - containerPort: 5432
               name: postgresql
           volumeMounts:
-            - name: postgresql-claim0
+            - name: postgresql-claim
               mountPath: /var/lib/postgresql/data
       volumes:
-        - name: postgresql-claim0
+        - name: postgresql-claim
           persistentVolumeClaim:
-            claimName: postgresql-claim0
-
-        - name: postgresql-initdb
-          configMap:
-            name: postgresql-initdb-config
+            claimName: postgresql-claim
