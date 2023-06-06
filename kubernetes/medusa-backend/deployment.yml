@@ -31,5 +31,7 @@ spec:
               value: something
             - name: DATABASE_TYPE
               value: postgres
+            - name: STORE_CORS
+              value: /http:\/\/*/
           ports:
             - containerPort: 9000
